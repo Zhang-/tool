@@ -91,6 +91,7 @@ $title = substr($log, (strrpos($log, '/')+1));
 
 function tail($filename, $lines = 50, $buffer = 4096)
 {
+
 	// Open the file
 	$f = fopen($filename, "rb");
 
@@ -459,14 +460,17 @@ foreach ($files as $dir => $files_array) {
 
 <code><pre style="font-size:14px;font-family:monospace;color:black;"><ol reversed>
 <?php
-$output = tail($file, $lines);
-$output = explode("\n", $output);
-if(DISPLAY_REVERSE){
-	// Latest first
-	$output = array_reverse($output);
+if (file_exists($file))
+{
+	$output = tail($file, $lines);
+	$output = explode("\n", $output);
+	if(DISPLAY_REVERSE){
+		// Latest first
+		$output = array_reverse($output);
+	}
+	$output = implode('<li>',$output);
+	echo $output;
 }
-$output = implode('<li>',$output);
-echo $output;
 ?>
 </ol></pre>
 	</code>
